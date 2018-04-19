@@ -56,14 +56,20 @@
 		<div class="card">
 		<?php require("db.php");
 			 if(isset($_POST['save']))
-			{
+			{	
+				$name=$_POST["name"];
 				$sql = "INSERT INTO post (askedby, post_title, post_content)
-				VALUES ('".$_POST["name"]."','".$_POST["title"]."','".htmlentities($_POST["content"])."')";
-				
+				VALUES ('".$_POST["name"]."','".$_POST["title"]."','".htmlentities (mysqli_real_escape_string($con,$name))."')";
 				$result = mysqli_query($con,$sql);
-			}$id = $con->insert_id;
-			mysqli_close($con); 
-		echo 	'<form action="ask.php" method="post">
+				$id = $con->insert_id;
+				if( $name!=''){
+					header("Location:post.php?id=$id");
+				}
+			}
+			$id = $con->insert_id;
+			
+			mysqli_close($con); ?>
+			<form action="ask.php" method="post">
 				
 				<div class="col-md-4 mb-3">
 				<label for="validationTooltip01">Name</label>
@@ -77,9 +83,9 @@
 				<div class="form-group">
 					<label for="exampleFormControlTextarea1"></label>
 					<textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="8" required></textarea>
-				</div>';
+				</div>
 	
-		echo '<button class="btn btn-primary" name="save" onclick="location.href="index.php?id='.$id.'";" type="submit">Post</button>';?>
+			<button class="btn btn-primary" name="save" type="submit">Post</button>
 			</form>
 			 
         </div></div>

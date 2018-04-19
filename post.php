@@ -10,7 +10,7 @@
 
     <title>askME</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet">
+	<link href="css/styleO.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
     <style>
@@ -57,7 +57,7 @@
 			$result = mysqli_query($con,"SELECT * FROM post WHERE id='$id'");
 			$row = mysqli_fetch_array($result);
 			$date = strtotime($row['post_date']);
-				echo '<div class="card">
+				echo '<div class="cardO">
 				<div class="ptitle"><h2 style="color:#0274be;">' . $row['post_title'] . '</h2></div>';
 				echo '<div class="postinfo"><i class="fa fa-calendar" aria-hidden="true"></i>'.date(" F j Y",$date).'	&nbsp; <i class="fa fa-user" aria-hidden="true"></i> asked by '.$row['askedby'].'</div>';
 				echo nl2br('<div class="pcontent"><p>' . html_entity_decode($row['post_content']).' </p></div></div>');
