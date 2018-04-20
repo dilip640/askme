@@ -1,6 +1,23 @@
 nav a{
 	color:white;
 }
+
+.side a{
+	color:#505050;
+}
+
+.fot a{
+	color:white;
+}
+.fot{
+	color:white;
+	background-color:#e85664!important;
+	height:30px;
+	line-height:1px;
+	-webkit-box-shadow: 0px -3.5px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px -3.5px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px -3.5px 5px 0px rgba(0,0,0,0.75);
+}
 .tog .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='#f8f9fabf' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
@@ -30,9 +47,9 @@ body{
 
 .card{
 	position:relative;
-	width:100%;
 	background-color:white;
-	margin:20px;
+	margin-bottom:20px;
+	margin-top:20px;
 	border-radius:5px;
 	padding:4%;
 }

@@ -10,7 +10,7 @@
 
     <title>askME</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet">
+	<link href="css/styleO.css" rel="stylesheet">
 	<link href="css/form.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
@@ -53,22 +53,20 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8">
-		<div class="card">
+		<div class="cardO">
 		<?php require("db.php");
 			 if(isset($_POST['save']))
 			{	
 				$name=$_POST["name"];
+				$content=$_POST["content"];
 				$sql = "INSERT INTO post (askedby, post_title, post_content)
-				VALUES ('".$_POST["name"]."','".$_POST["title"]."','".htmlentities (mysqli_real_escape_string($con,$name))."')";
+				VALUES ('".$_POST["name"]."','".mysqli_real_escape_string($con,$_POST["title"])."','".htmlentities (mysqli_real_escape_string($con,$content))."')";
 				$result = mysqli_query($con,$sql);
 				$id = $con->insert_id;
 				if( $name!=''){
 					header("Location:post.php?id=$id");
 				}
-			}
-			$id = $con->insert_id;
-			
-			mysqli_close($con); ?>
+			} ?>
 			<form action="ask.php" method="post">
 				
 				<div class="col-md-4 mb-3">
@@ -89,10 +87,27 @@
 			</form>
 			 
         </div></div>
-		<div class="col-lg-4">
-         
+		<div class="col-md-4">
+			<div class="cardO side">
+			<div><h4>Recent Questions</h4></div>
+				<ul>
+				<?php 
+					$result = mysqli_query($con,"SELECT * FROM post ORDER BY id DESC");
+					$z=0;
+				while(($row = mysqli_fetch_array($result)) && $z!=5){
+					echo '<li><a href="post.php?id='.$row['id'].'">' . $row['post_title'] . '</a></li>';
+					$z++;
+				}
+				echo '</div>';
+					mysqli_close($con);
+				?>
+				</ul>
         </div>
       </div>
+    </div>
+	<div class="footer fot py-3 text-center">
+        © 2018:
+        <a href="#"> askME </a>
     </div>
 	<script>
 	$(document).ready(function () {

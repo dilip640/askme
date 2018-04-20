@@ -51,7 +51,7 @@
     </nav>
     <div class="container">
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-md-8">
          <?php require("db.php");
 			$id = $_GET['id'];
 			$result = mysqli_query($con,"SELECT * FROM post WHERE id='$id'");
@@ -60,17 +60,75 @@
 				echo '<div class="cardO">
 				<div class="ptitle"><h2 style="color:#0274be;">' . $row['post_title'] . '</h2></div>';
 				echo '<div class="postinfo"><i class="fa fa-calendar" aria-hidden="true"></i>'.date(" F j Y",$date).'	&nbsp; <i class="fa fa-user" aria-hidden="true"></i> asked by '.$row['askedby'].'</div>';
-				echo nl2br('<div class="pcontent"><p>' . html_entity_decode($row['post_content']).' </p></div></div>');
+				echo nl2br('<div class="pcontent"><p>' . html_entity_decode($row['post_content']).' </p></div>');
 			
-			mysqli_close($con); ?>
+			?>
+			<div class="hea"><h4>Answers</h4></div>
+			
+			<?php 	
+				$resul = mysqli_query($con,"SELECT * FROM answers WHERE post_id='$id'");
+				while($row = mysqli_fetch_array($resul)){
+				$date = strtotime($row['ans_date']);
+				echo '<div class="answers"><h5>'.$row['ansby'].'</h5>
+				<div class="anscont">'.$row['ans_content'].'</div>
+				<div class="ansinfo"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;'.date(" F j Y",$date).'&nbsp;</div></div>';}
+			?>
+			<div class="answers">
+				<form action="post.php" method="post">
+				
+				<div class="form-group">
+					<label for="exampleFormControlTextarea1"></label>
+					<textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="8" required></textarea>
+				</div>
+				<div class="col-md-4 mb-3">
+				<label for="validationTooltip01">Name</label>
+				<input type="text" class="form-control" name="name" id="validationTooltip01"  required>
+				 <?php echo '<input type="hidden" name="xid" value="'.htmlentities($id).'">'; ?>
+				</div>
+	
+			<button class="btn btn-primary" name="save" type="submit">Reply</button>
+			</form>
+			<?php
+			session_start();
+			$_SESSION['ID'] = $id;
+				if(isset($_POST['save']))
+			{	
+				$id=$_POST["xid"];
+				$name=$_POST["name"];
+				$content=$_POST["content"];
+				$sql = "INSERT INTO answers (ansby, post_id, ans_content)
+				VALUES ('".$_POST["name"]."','".$id."','".htmlentities (mysqli_real_escape_string($con,$content))."')";
+				$result = mysqli_query($con,$sql);
+				if( $name!=''){
+					header("Location:post.php?id=$id");
+				}
+			}
+			?>
+			</div>
+		</div>
 </div>
-        </div>
-		<div class="col-lg-4">
-         
+		<div class="col-md-4">
+			<div class="cardO side">
+			<div><h4>Recent Questions</h4></div>
+				<ul>
+				<?php 
+					$result = mysqli_query($con,"SELECT * FROM post ORDER BY id DESC");
+					$z=0;
+				while(($row = mysqli_fetch_array($result)) && $z!=5){
+					echo '<li><a href="post.php?id='.$row['id'].'">' . $row['post_title'] . '</a></li>';
+					$z++;
+				}
+				echo '</div>';
+					mysqli_close($con);
+				?>
+				</ul>
         </div>
       </div>
     </div>
-
+<div class="footer fot py-3 text-center">
+        © 2018:
+        <a href="#"> askME </a>
+    </div>
     
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
