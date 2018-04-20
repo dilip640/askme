@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+	<link rel="icon" href="css/ico.png">
     <title>askME</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/styleO.css" rel="stylesheet">
@@ -109,34 +109,6 @@
         © 2018:
         <a href="#"> askME </a>
     </div>
-	<script>
-	$(document).ready(function () {
-
-$('#form').validate({
-    rules: {
-        name: {
-            minlength: 2,
-            required: true
-        },
-        email: {
-            required: true,
-            email: true
-        },
-        message: {
-            minlength: 2,
-            required: true
-        }
-    },
-    highlight: function (element) {
-        $(element).closest('.control-group').removeClass('success').addClass('error');
-    },
-    success: function (element) {
-        element.text('OK!').addClass('valid')
-            .closest('.control-group').removeClass('error').addClass('success');
-    }
-});
-});
-	</script>
     
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
