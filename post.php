@@ -64,12 +64,16 @@
 			
 			?>
 			<div class="hea"><h4>Answers</h4></div>
-			
 			<?php 	
-				$resul = mysqli_query($con,"SELECT * FROM answers WHERE post_id='$id'");
+				$resul = mysqli_query($con,"SELECT * FROM answers WHERE post_id='$id' ORDER BY vote DESC");
 				while($row = mysqli_fetch_array($resul)){
-				$date = strtotime($row['ans_date']);
-				echo '<div class="answers"><h5>'.$row['ansby'].'</h5>
+					$date = strtotime($row['ans_date']);
+					echo '<div class="answers">
+					<div class = "box">
+					<div class = "up" onClick="upvote('.$row['id'].')" style="cursor: pointer;">&#9650;</div><div id="'.$row['id'].'">'.$row['vote'].'</div>
+				<div class = "down" onClick="downvote('.$row['id'].')" style="cursor: pointer;">&#9660;</div></div>
+					<h5>'.$row['ansby'].'</h5>
+				
 				<div class="anscont">'.$row['ans_content'].'</div>
 				<div class="ansinfo"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;'.date(" F j Y",$date).'&nbsp;</div></div>';}
 			?>
@@ -89,8 +93,6 @@
 			<button class="btn btn-primary" name="save" type="submit">Reply</button>
 			</form>
 			<?php
-			session_start();
-			$_SESSION['ID'] = $id;
 				if(isset($_POST['save']))
 			{	
 				$id=$_POST["xid"];
@@ -129,7 +131,31 @@
         © 2018:
         <a href="#"> askME </a>
     </div>
-    
+  <script>
+function upvote(id)
+{
+    var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById(id).innerHTML=xmlhttp.responseText;
+            }
+        };
+    xmlhttp.open("GET", "vote.php?id=" +id+"&vote="+1, true);
+    xmlhttp.send();
+}
+function downvote(id)
+{
+    var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById(id).innerHTML=xmlhttp.responseText;
+            }
+        };
+    xmlhttp.open("GET", "vote.php?id=" +id+"&vote="+0, true);
+    xmlhttp.send();
+}
+</script>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
