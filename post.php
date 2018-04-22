@@ -54,12 +54,20 @@
         <div class="col-md-8">
          <?php require("db.php");
 			$id = $_GET['id'];
+			$ip=$_SERVER['REMOTE_ADDR'];
+			$query = mysqli_query($con,"SELECT * FROM seen WHERE post_id='".$id."' AND ip_address='".$ip."'");
+			if(mysqli_num_rows($query)==0){
+				$sqli = "INSERT INTO seen (post_id, ip_address) VALUES ('".$id."','".$ip."')";
+				mysqli_query($con,$sqli);
+				$update = "UPDATE post SET seen = seen + 1 WHERE id = '".$id."'";
+				mysqli_query($con, $update);
+			}
 			$result = mysqli_query($con,"SELECT * FROM post WHERE id='$id'");
 			$row = mysqli_fetch_array($result);
 			$date = strtotime($row['post_date']);
 				echo '<div class="cardO">
 				<div class="ptitle"><h2 style="color:#0274be;">' . $row['post_title'] . '</h2></div>';
-				echo '<div class="postinfo"><i class="fa fa-calendar" aria-hidden="true"></i>'.date(" F j Y",$date).'	&nbsp; <i class="fa fa-user" aria-hidden="true"></i> asked by '.$row['askedby'].'</div>';
+				echo '<div class="postinfo"><i class="fa fa-calendar" aria-hidden="true"></i>'.date(" F j Y",$date).'	&nbsp; <i class="fa fa-user" aria-hidden="true"></i> asked by '.$row['askedby'].' &nbsp;&nbsp;<i class="fa fa-eye"></i> '.$row['seen'].'</div>';
 				echo nl2br('<div class="pcontent"><p>' . html_entity_decode($row['post_content']).' </p></div>');
 			
 			?>

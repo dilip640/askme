@@ -1,4 +1,4 @@
-<?php $con=mysqli_connect("localhost","exuser","humsafar.123","askme1");
+<?php $con=mysqli_connect("localhost","exuser","humsafar.123","askme");
 
 if (mysqli_connect_errno())
 {

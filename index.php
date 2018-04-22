@@ -53,18 +53,38 @@
       <div class="row">
         <div class="col-md-8">
          <?php require("db.php");
-			$result = mysqli_query($con,"SELECT * FROM post ORDER BY id DESC");
+			 if(isset($_GET['sort']))
+				$order=$_GET['sort'];
+			else $order='id';
+			$result = mysqli_query($con,"SELECT * FROM post ORDER BY ".$order." DESC");
 			while($row = mysqli_fetch_array($result)){
 				$date = strtotime($row['post_date']);
 				echo '<div class="card">';
 				echo '<div class="ptitle"><a style="text-decoration:none" href="post.php?id='.$row['id'].'"><h3 style="color:#0274be;">' . $row['post_title'] . '</h3></a></div>';
-				echo '<div class="postinfo"><i class="fa fa-calendar" aria-hidden="true"></i> '.date(" F j Y",$date).' 	&nbsp; <i class="fa fa-user" aria-hidden="true"></i> asked by '.$row['askedby'].'</div>';
+				echo '<div class="postinfo"><i class="fa fa-calendar" aria-hidden="true"></i> '.date(" F j Y",$date).' 	&nbsp; <i class="fa fa-user" aria-hidden="true"></i> asked by '.$row['askedby'].' &nbsp;&nbsp;<i class="fa fa-eye"></i> '.$row['seen'].'</div>';
 				echo '<div class="pcontent"><p>' . substr($row['post_content'], 0, 250) . '...</p><a href="post.php?id='.$row['id'].'">[Continue reading...]</a></div></div>';
 			}
-			 ?>
+			?>
 	</div>
-			<div class="col-lg-4">
-			<div class="card side">
+			<div class="col-md-4">
+				<div class="side side">
+				<div><h5 class="text-center" style="color: #e85664">ORDER BY</h5></div>
+				<form method="get" action="">
+					<label class="cont">Newest First
+					<input type="radio" checked="checked" name="sort" value="id">
+					<span class="checkmark"></span>
+					</label>
+					<label class="cont">Most Viewed
+					<input type="radio" name="sort" value='seen'>
+					<span class="checkmark"></span>
+					</label>
+					<button style="margin-left:30%; border-radius:5px;cursor: pointer;" type="submit" >Sort</button>
+				</form>
+
+			</div>
+					
+				
+			<div class="side side">
 			<div><h4>Recent Questions</h4></div>
 			 <ul>
 				<?php 
@@ -80,9 +100,7 @@
 				?>
 			</div>
         </div>
-		<div class="col-lg-4">
-         
-        </div>
+		
       </div>
     </div>
 	<div class="footer-copyright fot py-3 text-center">
