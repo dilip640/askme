@@ -118,6 +118,7 @@
 		</div>
 </div>
 		<div class="col-md-4">
+		<div class="sticky-top">
 			<div class="cardO side">
 			<div><h4>Recent Questions</h4></div>
 				<ul>
@@ -132,7 +133,7 @@
 					mysqli_close($con);
 				?>
 				</ul>
-        </div>
+        </div></div>
       </div>
     </div>
 <div class="footer fot py-3 text-center">

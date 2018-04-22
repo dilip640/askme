@@ -67,6 +67,7 @@
 			?>
 	</div>
 			<div class="col-md-4">
+			<div class="sticky-top">
 				<div class="side side">
 				<div><h5 class="text-center" style="color: #e85664">ORDER BY</h5></div>
 				<form method="get" action="">
@@ -98,7 +99,7 @@
 				echo '</u></div>';
 					mysqli_close($con);
 				?>
-			</div>
+			</div></div>
         </div>
 		
       </div>
