@@ -81,7 +81,7 @@
 					<input type="radio" name="sort" value='seen'>
 					<span class="checkmark"></span>
 					</label>
-					<button style="margin-left:30%; border-radius:5px;cursor: pointer;" type="submit" >Sort</button>
+					<button style="margin-left:30%; cursor: pointer;" type="submit" > Sort </button>
 				</form>
 
 			</div>
