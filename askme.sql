@@ -5,6 +5,7 @@ CREATE TABLE `post` (
   `post_content` varchar(2000) NOT NULL,
   `post_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `askedby` varchar(100) NOT NULL,
+  `seen` int(20) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

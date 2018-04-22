@@ -104,7 +104,7 @@
 		
       </div>
     </div>
-	<div class="footer-copyright fot py-3 text-center">
+	<div class="footer fot py-3 text-center">
         © 2018:
         <a href="#"> askME </a>
     </div>
