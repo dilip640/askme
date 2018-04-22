@@ -64,17 +64,33 @@
 			}
 			$result = mysqli_query($con,"SELECT * FROM post WHERE id='$id'");
 			$row = mysqli_fetch_array($result);
+			$content = @make_links_from_http($row['post_content']);
 			$date = strtotime($row['post_date']);
 				echo '<div class="cardO">
 				<div class="ptitle"><h2 style="color:#0274be;">' . $row['post_title'] . '</h2></div>';
 				echo '<div class="postinfo"><i class="fa fa-calendar" aria-hidden="true"></i>'.date(" F j Y",$date).'	&nbsp; <i class="fa fa-user" aria-hidden="true"></i> asked by '.$row['askedby'].' &nbsp;&nbsp;<i class="fa fa-eye"></i> '.$row['seen'].'</div>';
-				echo nl2br('<div class="pcontent"><p>' . html_entity_decode($row['post_content']).' </p></div>');
+				echo nl2br('<div class="pcontent"><p>' . html_entity_decode($content).' </p></div>');
 			
 			?>
 			<div class="hea"><h4>Answers</h4></div>
 			<?php 	
+			function make_links_from_http($content) {   
+    // Links out of text links
+    preg_match_all('!(((f|ht)tp(s)?://)[-a-zA-Zа-яА-Я()0-9@:%_+.~#?&;//=]+)!i', $content, $matches);
+    foreach ($matches[0] as $key=>$link) {
+        if (!preg_match('!<a(.*)'.$link.'(.*)/a>!i', $content))
+        {
+            $content = str_replace($link, '<a href="'.$link.'" target="_blank">'.$link.'</a>', $content);
+        }
+    }
+
+    return $content;
+} 
+
+
 				$resul = mysqli_query($con,"SELECT * FROM answers WHERE post_id='$id' ORDER BY vote DESC");
 				while($row = mysqli_fetch_array($resul)){
+					$content = @make_links_from_http($row['ans_content']);
 					$date = strtotime($row['ans_date']);
 					echo '<div class="answers">
 					<div class = "box">
@@ -82,7 +98,7 @@
 				<div class = "down" onClick="downvote('.$row['id'].')" style="cursor: pointer;">&#9660;</div></div>
 					<h5>'.$row['ansby'].'</h5>
 				
-				<div class="anscont">'.$row['ans_content'].'</div>
+				<div class="anscont">'.nl2br(html_entity_decode($content)).'</div>
 				<div class="ansinfo"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;'.date(" F j Y",$date).'&nbsp;</div></div>';}
 			?>
 			<div class="answers">

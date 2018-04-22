@@ -57,10 +57,12 @@
 				$order=$_GET['sort'];
 			else $order='id';
 			$result = mysqli_query($con,"SELECT * FROM post ORDER BY ".$order." DESC");
+			if(mysqli_num_rows($result)==0){
+				echo '<div class="card"><div class="ptitle"><h3 style="color:#0274be;">No Question Yet!</h3></div></div>';
+			}
 			while($row = mysqli_fetch_array($result)){
 				$date = strtotime($row['post_date']);
-				echo '<div class="card">';
-				echo '<div class="ptitle"><a style="text-decoration:none" href="post.php?id='.$row['id'].'"><h3 style="color:#0274be;">' . $row['post_title'] . '</h3></a></div>';
+				echo '<div class="card"><div class="ptitle"><a style="text-decoration:none" href="post.php?id='.$row['id'].'"><h3 style="color:#0274be;">' . $row['post_title'] . '</h3></a></div>';
 				echo '<div class="postinfo"><i class="fa fa-calendar" aria-hidden="true"></i> '.date(" F j Y",$date).' 	&nbsp; <i class="fa fa-user" aria-hidden="true"></i> asked by '.$row['askedby'].' &nbsp;&nbsp;<i class="fa fa-eye"></i> '.$row['seen'].'</div>';
 				echo '<div class="pcontent"><p>' . substr($row['post_content'], 0, 250) . '...</p><a href="post.php?id='.$row['id'].'">[Continue reading...]</a></div></div>';
 			}
