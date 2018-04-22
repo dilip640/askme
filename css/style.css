@@ -113,7 +113,8 @@ box-shadow: 2px 2px 2px 2px #b7b7b7;
 .side button{
 	background-color:#e85664;
 	color:white;
-	border-radius:20px;
+	border-radius:17px;
+	padding:2%;
 }
 
 .cont input {
