@@ -1,4 +1,4 @@
-<?php $con=mysqli_connect("localhost","exuser","humsafar.123","askme1");
+<?php $con=mysqli_connect("sql313.epizy.com","	epiz_22010858","dsplayer123","epiz_22010858_askme");
 
 if (mysqli_connect_errno())
 {
