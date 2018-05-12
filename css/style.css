@@ -18,6 +18,7 @@ nav a{
 	color:white;
 }
 .fot{
+	z-index:1186;
 	color:white;
 	background-color:#e85664!important;
 	height:30px;

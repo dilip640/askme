@@ -1,3 +1,20 @@
+<?php 
+		ob_start();
+		require("db.php");
+			 if(isset($_POST['save']))
+			{	
+				$name=$_POST["name"];
+				$content=$_POST["content"];
+				$sql = "INSERT INTO post (askedby, post_title, post_content)
+				VALUES ('".$_POST["name"]."','".mysqli_real_escape_string($con,$_POST["title"])."','".htmlentities (mysqli_real_escape_string($con,$content))."')";
+				$result = mysqli_query($con,$sql);
+				$id = $con->insert_id;
+				if( $name!=''){
+					//echo "<script type='text/javascript'>window.location.href = 'post.php?id=9';</script>";
+					header("Location: post.php?id=$id");
+				}
+			} 
+			?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,19 +71,7 @@
       <div class="row">
         <div class="col-lg-8">
 		<div class="cardO">
-		<?php require("db.php");
-			 if(isset($_POST['save']))
-			{	
-				$name=$_POST["name"];
-				$content=$_POST["content"];
-				$sql = "INSERT INTO post (askedby, post_title, post_content)
-				VALUES ('".$_POST["name"]."','".mysqli_real_escape_string($con,$_POST["title"])."','".htmlentities (mysqli_real_escape_string($con,$content))."')";
-				$result = mysqli_query($con,$sql);
-				$id = $con->insert_id;
-				if( $name!=''){
-					header("Location:post.php?id=$id");
-				}
-			} ?>
+		
 			<form action="ask.php" method="post">
 				
 				<div class="col-md-4 mb-3">

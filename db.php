@@ -1,6 +1,7 @@
-<?php $con=mysqli_connect("sql313.epizy.com","epiz_22010858","dsplayer123","epiz_22010858_askme");
+<?php $con=new mysqli(null,'root','dsplayer123',"askme",null,"/cloudsql/askme8896:us-central1:root1");
 
 if (mysqli_connect_errno())
 {
 echo "Failed to connect to MySQL: " . mysqli_connect_error();
-} ?>
+}
+ ?>

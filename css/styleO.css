@@ -1,3 +1,7 @@
+.disabledbutton {
+    pointer-events: none;
+    opacity: 0.4;
+}
 nav a{
 	color:white;
 }
@@ -22,6 +26,7 @@ pre{
     background-color: #f5f5f5;
 }
 .fot{
+	z-index:1164;
 	color:white;
 	background-color:#e85664!important;
 	height:30px;

@@ -1,3 +1,17 @@
+<?php require("db.php");
+				if(isset($_POST['save']))
+			{	
+				$id=$_POST["xid"];
+				$name=$_POST["name"];
+				$content=$_POST["content"];
+				$sql = "INSERT INTO answers (ansby, post_id, ans_content)
+				VALUES ('".$_POST["name"]."','".$id."','".htmlentities (mysqli_real_escape_string($con,$content))."')";
+				$result = mysqli_query($con,$sql);
+				if( $name!=''){
+					header("Location:post.php?id=$id");
+				}
+			}
+			?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,7 +66,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8">
-         <?php require("db.php");
+         <?php 
 			$id = $_GET['id'];
 			$ip=$_SERVER['REMOTE_ADDR'];
 			$query = mysqli_query($con,"SELECT * FROM seen WHERE post_id='".$id."' AND ip_address='".$ip."'");
@@ -93,7 +107,7 @@
 					$content = @make_links_from_http($row['ans_content']);
 					$date = strtotime($row['ans_date']);
 					echo '<div class="answers">
-					<div class = "box">
+					<div id="z'.$row['id'].'" class = "box">
 					<div class = "up" onClick="upvote('.$row['id'].')" style="cursor: pointer;">&#9650;</div><div id="'.$row['id'].'">'.$row['vote'].'</div>
 				<div class = "down" onClick="downvote('.$row['id'].')" style="cursor: pointer;">&#9660;</div></div>
 					<h5>'.$row['ansby'].'</h5>
@@ -116,20 +130,7 @@
 	
 			<button class="btn btn-primary" name="save" type="submit">Reply</button>
 			</form>
-			<?php
-				if(isset($_POST['save']))
-			{	
-				$id=$_POST["xid"];
-				$name=$_POST["name"];
-				$content=$_POST["content"];
-				$sql = "INSERT INTO answers (ansby, post_id, ans_content)
-				VALUES ('".$_POST["name"]."','".$id."','".htmlentities (mysqli_real_escape_string($con,$content))."')";
-				$result = mysqli_query($con,$sql);
-				if( $name!=''){
-					header("Location:post.php?id=$id");
-				}
-			}
-			?>
+			
 			</div>
 		</div>
 </div>
@@ -159,10 +160,12 @@
   <script>
 function upvote(id)
 {
+	$("#z"+id).addClass("disabledbutton");
     var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById(id).innerHTML=xmlhttp.responseText;
+                $("#z"+id).removeClass("disabledbutton");
             }
         };
     xmlhttp.open("GET", "vote.php?id=" +id+"&vote="+1, true);
@@ -170,10 +173,12 @@ function upvote(id)
 }
 function downvote(id)
 {
+	$("#z"+id).addClass("disabledbutton");
     var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById(id).innerHTML=xmlhttp.responseText;
+                $("#z"+id).removeClass("disabledbutton");
             }
         };
     xmlhttp.open("GET", "vote.php?id=" +id+"&vote="+0, true);
